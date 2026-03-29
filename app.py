@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import random
 from functools import lru_cache
@@ -13,6 +14,14 @@ app = FastAPI()
 PROJECT_ROOT = Path(__file__).resolve().parent
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
 LOGO_PATH = PROJECT_ROOT / "logo.png"
+raw_allowed_origins = os.getenv("ALLOWED_ORIGINS", "")
+ALLOWED_ORIGINS = [origin.strip() for origin in raw_allowed_origins.split(",") if origin.strip()]
+
+if not ALLOWED_ORIGINS:
+    ALLOWED_ORIGINS = [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ]
 
 
 @lru_cache(maxsize=1)
@@ -26,7 +35,7 @@ def get_langgraph_app():
 # Allow the HTML frontend to talk to this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

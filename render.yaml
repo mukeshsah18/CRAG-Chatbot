@@ -10,5 +10,7 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: ALLOWED_ORIGINS
+        value: https://crag-ioe-chatbot.onrender.com
       - key: GROQ_API_KEY
         sync: false
