@@ -1,0 +1,11 @@
+# Environment
+.env
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local vector DB
+chroma_db/
